@@ -58,6 +58,7 @@ if (!isAdmin()) {
                     <th>Danh mục</th>
                     <th>Lượt xem</th>
                     <th>Ngày tạo</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,10 +78,18 @@ if (!isAdmin()) {
                         echo "<td>".($row['name'] ? htmlspecialchars($row['name']) : 'N/A')."</td>";
                         echo "<td>".(int)$row['views']."</td>";
                         echo "<td>".date('d/m/Y', strtotime($row['created_at']))."</td>";
+                        // Actions: Edit and Delete
+                        echo "<td>";
+                        echo "<a class='btn btn-sm' href='add_article.php?edit=".$row['article_id']."'>Sửa</a> ";
+                        echo "<form method='POST' action='delete_article.php' style='display:inline;' onsubmit=\"return confirm('Bạn có chắc muốn xóa bài viết này?');\">";
+                        echo "<input type='hidden' name='article_id' value='".(int)$row['article_id']."'>";
+                        echo "<button type='submit' class='btn btn-danger btn-sm'>Xóa</button>";
+                        echo "</form>";
+                        echo "</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5' class='no-data'>Chưa có bài viết nào</td></tr>";
+                    echo "<tr><td colspan='6' class='no-data'>Chưa có bài viết nào</td></tr>";
                 }
                 ?>
             </tbody>
